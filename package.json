@@ -1,0 +1,19 @@
+{
+  "name": "spineless",
+  "version": "0.0.1",
+  "description": "(WIP)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jitta/spineless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jitta/spineless/issues"
+  },
+  "homepage": "https://github.com/jitta/spineless#readme"
+}
