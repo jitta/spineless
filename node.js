@@ -8,6 +8,8 @@ var http = require('./http')
 var Node = function(namespace, seed){
   var that = this
   var _modules = []
+
+  // store initial seed list
   this.options = {
     seed: seed
   }
@@ -25,10 +27,13 @@ var Node = function(namespace, seed){
   this.server.useFirst(morgan(this.namespace + ' | :method :url :status :response-time ms - :res[content-length]'))
   for(var i in _modules){
     var module = _modules[i]
+    // start module, inject node dependencies
     module.class(this, Node)
   }
   return this
 }
+
+util.inherits(Node, EventEmitter)
 
 // event emitter
 // Node.prototype.__proto__ = EventEmitter.prototype
@@ -51,19 +56,20 @@ Node.prototype.start = function(port, hostname, callback){
 }
 
 module.exports = Node
-util.inherits(Node, EventEmitter)
+// util.inherits(Node, EventEmitter)
 
 
 
 
 
-var a = new Node('a')
-a.start(3000)
+// var a = new Node('a')
+// a.start(3000)
+//
+// setTimeout(function(){
+//   var b = new Node('b', ['http://127.0.0.1:3000'])
+//   b.start(3001)
+// }, 2000)
 
-setTimeout(function(){
-  var b = new Node('b', ['http://127.0.0.1:3000'])
-  b.start(3001)
-}, 2000)
 
 // call('http://localhost:3000/gossip', {call: true}, function(err, res){
 //   console.log('call', typeof res, res)
@@ -73,7 +79,7 @@ setTimeout(function(){
 //   console.log(a)
 // }, 5000)
 
-
+// TODO: getter should be able to put simple value in addition to function
 function defineGetter(obj, name, getter) {
   Object.defineProperty(obj, name, {
     configurable: true,
