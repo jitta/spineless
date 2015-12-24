@@ -13,7 +13,12 @@
     "amp-message": "^0.1.2",
     "body-parser": "^1.14.2",
     "debug": "^2.2.0",
+    "minimist": "^1.2.0",
     "morgan": "^1.6.1",
     "puid": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1"
   }
 }
