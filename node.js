@@ -3,7 +3,9 @@ var http = require('./http')
     morgan = require('morgan'),
     puid = new (require('puid'))(false),
     util = require('util'),
-    EventEmitter = require("events")
+    EventEmitter = require("events"),
+    chalk = require('chalk'),
+    helper = require('./helper')
 
 var Node = function(namespace, seed){
   var that = this
@@ -19,12 +21,13 @@ var Node = function(namespace, seed){
 
   _modules.push({id: 'peer', class: require('./modules/peer')})
   _modules.push({id: 'ping', class: require('./modules/ping')})
+  _modules.push({id: 'route', class: require('./modules/route')})
 
   // hide from exposed
   var server = http.createServer()
-  defineGetter(this, 'server', function(){ return server })
+  helper.defineGetter(this, 'server', function(){ return server })
 
-  this.server.useFirst(morgan(this.namespace + ' | :method :url :status :response-time ms - :res[content-length]'))
+  this.server.useFirst(morgan(chalk.blue("[SERVER] ") + this.namespace + ' | :method :url :status :response-time ms - :res[content-length]'))
   for(var i in _modules){
     var module = _modules[i]
     // start module, inject node dependencies
@@ -34,9 +37,6 @@ var Node = function(namespace, seed){
 }
 
 util.inherits(Node, EventEmitter)
-
-// event emitter
-// Node.prototype.__proto__ = EventEmitter.prototype
 
 Node.prototype.start = function(port, hostname, callback){
   var that = this
@@ -56,34 +56,3 @@ Node.prototype.start = function(port, hostname, callback){
 }
 
 module.exports = Node
-// util.inherits(Node, EventEmitter)
-
-
-
-
-
-// var a = new Node('a')
-// a.start(3000)
-//
-// setTimeout(function(){
-//   var b = new Node('b', ['http://127.0.0.1:3000'])
-//   b.start(3001)
-// }, 2000)
-
-
-// call('http://localhost:3000/gossip', {call: true}, function(err, res){
-//   console.log('call', typeof res, res)
-// })
-
-// setInterval(function(){
-//   console.log(a)
-// }, 5000)
-
-// TODO: getter should be able to put simple value in addition to function
-function defineGetter(obj, name, getter) {
-  Object.defineProperty(obj, name, {
-    configurable: true,
-    enumerable: false,
-    get: getter
-  })
-}

@@ -1,5 +1,4 @@
 var argv = require('minimist')(process.argv.slice(2));
-
 var Node = require('./node');
 
 var service;

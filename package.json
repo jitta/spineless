@@ -18,7 +18,9 @@
     "puid": "^1.0.5"
   },
   "devDependencies": {
+    "chalk": "^1.1.1",
     "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.1.1"
+    "eslint-config-airbnb": "^2.1.1",
+    "prettyjson": "^1.1.3"
   }
 }
